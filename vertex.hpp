@@ -43,10 +43,13 @@ class Vertex {
         // whether node has been visited or not
         bool visited;
 
+	// node that comes before this one in a path from source node
+	Vertex* previous;
+
         // Constructor that constructs a node with the given label.
         Vertex(const unsigned int& name) :
                 label(name), cost(std::numeric_limits<int>::max()), 
-                visited(false) {} 
+                visited(false), previous(nullptr) {} 
 
 };
 

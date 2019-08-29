@@ -83,6 +83,9 @@ bool Graph::loadFromFile(const char* filename) {
 
 			while (!ss.eof()) {
 
+				// clear temp
+				temp = "";
+
 				// extracting current head
 				ss >> temp;
 
@@ -172,6 +175,7 @@ vector<Vertex*> Graph::Dijkstra(Vertex* source, Vertex* dest) {
 					unsigned int tentative = next.second->cost + (*adjIt).first;
 					if( tentative < ((*adjIt).second)->cost ){
 						((*adjIt).second)->cost = tentative;
+						((*adjIt).second)->previous = next.second;
 						reset.push_back((*adjIt).second);
 						toExplore.push(make_pair(((*adjIt).second)->cost, 
 									(*adjIt).second));

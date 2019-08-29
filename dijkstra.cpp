@@ -61,6 +61,30 @@ using namespace std;
 
 using namespace std;
 
+void printPath(Vertex* source, Vertex* dest) {
+
+	// stores all the previous actors and movie starting from dest
+	vector<Vertex*> vectorPrevious;
+
+	// the current actor in the path
+	Vertex* current = dest;
+
+	// store all the previous actors and movies in path from
+	// dest to source until you hit source
+	while( current != source ){
+		vectorPrevious.push_back(current->previous);
+		current = current->previous;
+	}
+
+	// iterate backwards through the vector to print the path
+	// from source to dest
+	for( int i = vectorPrevious.size()-1; i >= 0; --i){
+		cout << vectorPrevious[i]->label << " --> ";
+	}
+	cout << dest->label << endl;
+}    
+
+
 // Main Driver
 int main(int argc, char** argv) 
 {
@@ -81,59 +105,32 @@ int main(int argc, char** argv)
 	// load graph from text file
 	G->loadFromFile(argv[IN_IDX]);
 
-	// create source and destination vertices 
+	// create source vertex 
 	Vertex* source = (G->vertex_map)[SOURCE_IDX];
-	Vertex* dest1 = (G->vertex_map)[DEST1_IDX];
-	Vertex* dest2 = (G->vertex_map)[DEST2_IDX];
-	Vertex* dest3 = (G->vertex_map)[DEST3_IDX];
-	Vertex* dest4 = (G->vertex_map)[DEST4_IDX];
-	Vertex* dest5 = (G->vertex_map)[DEST5_IDX];
-	Vertex* dest6 = (G->vertex_map)[DEST6_IDX];
-	Vertex* dest7 = (G->vertex_map)[DEST7_IDX];
-	Vertex* dest8 = (G->vertex_map)[DEST8_IDX];
-	Vertex* dest9 = (G->vertex_map)[DEST9_IDX];
-	Vertex* dest10 = (G->vertex_map)[DEST10_IDX];
 	
+	// indices of destination ints
+	vector<unsigned int> destinations; 
+
+	// fill vector
+	destinations.push_back(DEST1_IDX);
+	destinations.push_back(DEST2_IDX);
+	destinations.push_back(DEST3_IDX);
+	destinations.push_back(DEST4_IDX);
+	destinations.push_back(DEST5_IDX);
+	destinations.push_back(DEST6_IDX);
+	destinations.push_back(DEST7_IDX);
+	destinations.push_back(DEST8_IDX);
+	destinations.push_back(DEST9_IDX);
+	destinations.push_back(DEST10_IDX);
+
 	// run Dijkstra from source to dest, reset,
 	// print the distance to dest vertex
-	resetVertices = G->Dijkstra(source, dest1);
-	cout << *((G->vertex_map)[DEST1_IDX]) << endl;	
-	G->reset(resetVertices);
-
-	resetVertices = G->Dijkstra(source, dest2);
-	cout << *((G->vertex_map)[DEST2_IDX]) << endl;
-	G->reset(resetVertices);
-
-	resetVertices = G->Dijkstra(source, dest3);
-	cout << *((G->vertex_map)[DEST3_IDX]) << endl;
-	G->reset(resetVertices);
-
-	resetVertices = G->Dijkstra(source, dest4);
-	cout << *((G->vertex_map)[DEST4_IDX]) << endl;
-	G->reset(resetVertices);
-	
-	resetVertices = G->Dijkstra(source, dest5);
-	cout << *((G->vertex_map)[DEST5_IDX]) << endl;
-	G->reset(resetVertices);
-
-	resetVertices = G->Dijkstra(source, dest6);
-	cout << *((G->vertex_map)[DEST6_IDX]) << endl;
-	G->reset(resetVertices);
-	
-	resetVertices = G->Dijkstra(source, dest7);
-	cout << *((G->vertex_map)[DEST7_IDX]) << endl;
-	G->reset(resetVertices);
-
-	resetVertices = G->Dijkstra(source, dest8);
-	cout << *((G->vertex_map)[DEST8_IDX]) << endl;
-	G->reset(resetVertices);
-	
-	resetVertices = G->Dijkstra(source, dest9);
-	cout << *((G->vertex_map)[DEST9_IDX]) << endl;
-	G->reset(resetVertices);
-
-	resetVertices = G->Dijkstra(source, dest10);
-	cout << *((G->vertex_map)[DEST10_IDX]) << endl;
-	G->reset(resetVertices);
+	for(unsigned int i = 0; i < destinations.size(); ++i){
+		Vertex* dest = (G->vertex_map)[destinations[i]];
+		resetVertices = G->Dijkstra(source, dest);
+		cout << *dest << endl;	
+		G->reset(resetVertices);
+		printPath(source, dest);
+	}	
 
 }	
