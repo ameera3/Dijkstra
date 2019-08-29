@@ -21,9 +21,9 @@ using namespace std;
 Graph::Graph(void) {}
 
 /*
- * Load the graph from a tab-delimited file of actor->movie relationships.
+ * Load the weighted graph from adjacency list description.
  *
- * in_filename - input filename
+ * filename - input filename
  *
  * return true if file was loaded sucessfully, false otherwise
  */
