@@ -131,6 +131,9 @@ int main(int argc, char** argv)
 		cout << *dest << endl;	
 		G->reset(resetVertices);
 		printPath(source, dest);
-	}	
+	}
+
+	// no memory leaks here
+	delete G;
 
 }	
